@@ -1,0 +1,10 @@
+.app {
+  display: flex;
+  justify-content: center;
+  color:#8b4513;
+}
+
+.game {
+  max-width: 1250px;
+  margin: 20px 20px 80px 20px;
+}

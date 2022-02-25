@@ -1,0 +1,24 @@
+.instructions {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+}
+
+.instructions h1 {
+  font-size: 2.5em;
+}
+
+.instructions p, ul {
+  font-size: 1.3em;
+}
+
+@media screen and (max-width:600px) {
+  .instructions h1 {
+    font-size: 2em;
+  }
+  
+  .instructions p, ul {
+    font-size: 1em;
+  }
+}

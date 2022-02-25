@@ -1,0 +1,61 @@
+/*
+Flip card technique: https://3dtransforms.desandro.com/card-flip
+*/
+
+.card.match {
+  display: none;
+}
+
+.scene {
+  width: 200px;
+  height: 200px;
+  perspective: 600px;
+}
+
+@media screen and (max-width:600px) {
+  .scene {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  background-color:saddlebrown;
+  border-radius: 5%;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card img {
+  width: 80%;
+}
+
+.card__face {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__face--front {
+  transform: rotateY( 180deg );
+}
+
+.card__face--front img {
+  border-radius: 5%;
+}
+
+/* Toggle .up class will cause flip */
+.card.up {
+  transform: rotateY(180deg);
+}
