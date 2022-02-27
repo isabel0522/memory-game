@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import './index.css';
 import { ReactComponent as TrophyIcon } from './../../assets/trophy.svg';
 import { initBoard } from './../../redux/actions';
 
