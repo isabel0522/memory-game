@@ -28,6 +28,7 @@ const initBoardData = (count=24) => {
       }
     }
   }
+
   return data;
 }
 

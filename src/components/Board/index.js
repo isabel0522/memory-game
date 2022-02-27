@@ -1,36 +1,51 @@
-import React, { useReducer } from 'react';
-import './board.css';
-import initBoardData from '../../utilities/initBoardData';
-import runBoardRule from '../../utilities/runBoardRule';
-import checkFinish from '../../utilities/checkFinish';
-import boardReducer from './boardReducer';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import './index.css';
+import { runBoardRule, checkComplete } from '../../utilities/boardHelper';
+import { CARD_MATCH, CARD_DOWN, TWO_CARDS_MATCH, TWO_CARDS_NOT_MATCH } from './../../constants/cardStatus';
 import Card from '../Card';
-import Finish from './Finish'
+import GameComplete from './../GameComplete';
+import { updateCardsStatus } from './../../redux/actions';
 
-const Board = ({cards=24}) => {
-  const [boardData, dispatch] = useReducer(boardReducer, initBoardData(cards));
+/**
+ * Run board rule once two cards are facing up
+ *   If both cards have same content, then update both with status match
+ *   If both cards ahve different content, then update both with status down
+ * 
+ * @param {Function} dispatch 
+ * @param {Object} boardData 
+ */
+const updateBoardStatus = (dispatch, boardData) => {
+  const [flippedCards, matchStatus] = runBoardRule(boardData);
+  if (matchStatus === TWO_CARDS_MATCH) {
+    setTimeout(()=>{
+      dispatch(updateCardsStatus(flippedCards, CARD_MATCH));
+    }, 1000);
 
-  const handleCardClick = (id) => {
-    dispatch({type: 'TOGGLE_CARD', id})
+  } else if (matchStatus === TWO_CARDS_NOT_MATCH) {
+      setTimeout(()=>{
+        dispatch(updateCardsStatus(flippedCards, CARD_DOWN));
+      }, 1000);
   }
+}
 
-  const handlePlayAgain = () => {
-    dispatch({type: 'INIT_BOARD', payload: initBoardData()})
+const Board = () => {
+  // Select boardData
+  const boardData = useSelector((state) => state.board);
+  const dispatch = useDispatch();
+  
+  // Update board once two cards are facing up
+  updateBoardStatus(dispatch, boardData);
 
+  // Check if game is completed
+  if(checkComplete(boardData)) {
+    return <GameComplete></GameComplete>
   }
-
-  console.log(boardData);
-
-  runBoardRule(boardData, dispatch);
-
-  if(checkFinish(boardData)) {
-    return <Finish handlePlayAgain={handlePlayAgain}></Finish>
-  }
-
+  // Render the cards
   return (
     <div className='board'>
       {Object.keys(boardData).map(key=>(
-        <Card key={key} cardId={key} cardData={boardData[key]} handleCardClick={handleCardClick}></Card>
+        <Card key={key} cardId={key} cardData={boardData[key]} ></Card>
       ))}
     </div>
   )
