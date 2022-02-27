@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './index.css';
 import { runBoardRule, checkComplete } from '../../utilities/boardHelper';
-import { CARD_MATCH, CARD_DOWN, TWO_CARDS_MATCH, TWO_CARDS_NOT_MATCH } from './../../constants/cardStatus';
+import { CARD_MATCH, CARD_DOWN, TWO_CARDS_MATCH, TWO_CARDS_NOT_MATCH, FLIP_DELAY } from './../../constants/cardStatus';
 import Card from '../Card';
 import GameComplete from './../GameComplete';
 import { updateCardsStatus } from './../../redux/actions';
@@ -20,12 +20,12 @@ const updateBoardStatus = (dispatch, boardData) => {
   if (matchStatus === TWO_CARDS_MATCH) {
     setTimeout(()=>{
       dispatch(updateCardsStatus(flippedCards, CARD_MATCH));
-    }, 1000);
+    }, FLIP_DELAY);
 
   } else if (matchStatus === TWO_CARDS_NOT_MATCH) {
       setTimeout(()=>{
         dispatch(updateCardsStatus(flippedCards, CARD_DOWN));
-      }, 1000);
+      }, FLIP_DELAY);
   }
 }
 
