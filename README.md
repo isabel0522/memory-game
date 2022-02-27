@@ -1,12 +1,12 @@
 # memory-game
-• At the start of the game, the user is presented with a grid of 24 facedown cards.
-• Each card looks identical face down, but has a face-up value that is matched by only one
+- At the start of the game, the user is presented with a grid of 24 facedown cards.
+- Each card looks identical face down, but has a face-up value that is matched by only one
 other card on the table.
-• When the user clicks a card, it flips over revealing its value.
-• When the user clicks the next card, its value is revealed and then compared against the
+- When the user clicks a card, it flips over revealing its value.
+- When the user clicks the next card, its value is revealed and then compared against the
 other face up card. If they are equal, both cards disappear. If they are different, they flip
 back down.
-• The game is continued until there are no cards left.
+- The game is continued until there are no cards left.
 
 ## Available Scripts
 
@@ -44,6 +44,6 @@ This app is been implemented by using React & Redux.
 2. TOGGLE_CARD: Toggle card status with facing up or down.
 3. UPDATE_CARDS_STATUS: Update two facing up cards status to match or facing down.
 
-
+![Screenshot](flowchart.jpeg)
 
 
