@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './index.css';
 import { runBoardRule, checkComplete } from '../../utilities/boardHelper';
-import { CARD_MATCH, CARD_DOWN, TWO_CARDS_MATCH, TWO_CARDS_NOT_MATCH, FLIP_DELAY } from './../../constants/cardStatus';
+import { CARD_MATCH, CARD_DOWN, CARD_UP, TWO_CARDS_MATCH, TWO_CARDS_NOT_MATCH, FLIP_DELAY } from './../../constants/cardStatus';
 import Card from '../Card';
 import GameComplete from './../GameComplete';
-import { updateCardsStatus } from './../../redux/actions';
+import { updateCardsStatus, toggleCard } from './../../redux/actions';
 
 /**
  * Run board rule once two cards are facing up
@@ -29,6 +29,21 @@ const updateBoardStatus = (dispatch, boardData) => {
   }
 }
 
+const handleCardClick = (dispatch, id, boardData) => {
+  // handle if card need to be flipped up
+  if(boardData[id].status === CARD_DOWN) {
+    // check if two are already up
+    const flippedCards = Object.keys(boardData).filter(key=>boardData[key].status === CARD_UP);
+    // only make two cards up, not the 3rd one and more
+    if(flippedCards.length < 2) {
+      dispatch(toggleCard(id));
+    }
+  } else {
+    // handle if card need to be flipped down
+    dispatch(toggleCard(id));
+  }
+}
+
 const Board = () => {
   // Select boardData
   const boardData = useSelector((state) => state.board);
@@ -36,6 +51,8 @@ const Board = () => {
   
   // Update board once two cards are facing up
   updateBoardStatus(dispatch, boardData);
+  
+  console.log('boardData', boardData);
 
   // Check if game is completed
   if(checkComplete(boardData)) {
@@ -45,7 +62,7 @@ const Board = () => {
   return (
     <div className='board'>
       {Object.keys(boardData).map(key=>(
-        <Card key={key} cardId={key} cardData={boardData[key]} ></Card>
+        <Card key={key} cardId={key} cardData={boardData[key]} handleCardClick={()=>{handleCardClick(dispatch, key, boardData)}} ></Card>
       ))}
     </div>
   )

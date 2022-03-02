@@ -49,11 +49,11 @@ const boardReducer = (state=initState, action) => {
           ...state,
           [action.cards[0]]: {
             ...state[action.cards[0]],
-            status: state[action.cards[0]].status = action.status
+            status: action.status
           },
           [action.cards[1]]: {
             ...state[action.cards[1]],
-            status: state[action.cards[1]].status = action.status
+            status: action.status
           }
         }
     default:
